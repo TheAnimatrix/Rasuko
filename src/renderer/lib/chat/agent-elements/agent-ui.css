@@ -1,0 +1,197 @@
+/*
+ * 21st.dev Agent Elements — Rasuko skin.
+ *
+ * The upstream library ships its own `--an-*` token set and animation
+ * primitives. Rasuko keeps the same names so the components ported from
+ * Mousse read identically, but every token resolves to a Rasuko design
+ * token — the assistant must look like the app, not like a bolted-on
+ * chat widget. Geometry (radii, shimmer) is kept verbatim.
+ */
+
+:root {
+  /* Geometry — all radii derive from --an-border-radius */
+  --an-border-radius: 16px;
+  --an-message-border-radius: var(--an-border-radius);
+  --an-input-border-radius: var(--an-border-radius);
+  --an-tool-border-radius: 10px;
+  --an-message-radius-inner-offset: 4px;
+
+  /* Surfaces */
+  --an-background: var(--card);
+  --an-background-secondary: var(--secondary);
+  --an-background-tertiary: var(--muted);
+  --an-foreground: var(--foreground);
+  --an-foreground-muted: var(--muted-foreground);
+  --an-foreground-subtle: color-mix(in oklab, var(--muted-foreground) 60%, transparent);
+  --an-border-color: var(--border);
+  --an-primary-color: var(--rasuko-accent, var(--ring));
+
+  /* User messages */
+  --an-user-message-bg: var(--secondary);
+  --an-user-message-text: var(--foreground);
+  --an-user-message-x: 14px;
+  --an-user-message-y: 10px;
+
+  /* Tools */
+  --an-tool-background: var(--secondary);
+  --an-tool-border-color: var(--border);
+  --an-tool-color: var(--foreground);
+  --an-tool-color-muted: var(--muted-foreground);
+
+  /* Code */
+  --an-code-background: var(--card);
+  --an-code-color: var(--foreground);
+
+  /* Diff / outcome */
+  --an-diff-added-bg: color-mix(in oklab, var(--success) 14%, transparent);
+  --an-diff-added-border: color-mix(in oklab, var(--success) 45%, transparent);
+  --an-diff-added-text: var(--success);
+  --an-diff-removed-bg: color-mix(in oklab, var(--destructive) 14%, transparent);
+  --an-diff-removed-border: color-mix(in oklab, var(--destructive) 45%, transparent);
+  --an-diff-removed-text: var(--destructive);
+  --an-warning-text: var(--warning);
+}
+
+/* ---------------------------------------------------------------- *
+ * TextShimmer
+ * ---------------------------------------------------------------- */
+
+@keyframes an-shimmer {
+  from {
+    background-position: 100% center;
+  }
+  to {
+    background-position: 0% center;
+  }
+}
+
+@keyframes an-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes an-ellipsis {
+  0% {
+    width: 0;
+  }
+  33% {
+    width: 0.33em;
+  }
+  66% {
+    width: 0.66em;
+  }
+  100% {
+    width: 1em;
+  }
+}
+
+.an-text-shimmer {
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    var(--an-foreground-subtle) 0%,
+    var(--an-foreground-subtle) 40%,
+    var(--an-foreground-muted) 50%,
+    var(--an-foreground-subtle) 60%,
+    var(--an-foreground-subtle) 100%
+  );
+  background-repeat: no-repeat;
+}
+
+.an-text-shimmer--active {
+  animation: an-shimmer var(--an-shimmer-duration, 2s) linear infinite;
+}
+
+.an-ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  width: 0;
+  vertical-align: bottom;
+  animation: an-ellipsis 1.2s steps(1, end) infinite;
+}
+
+/* Idle tool chrome dims slightly so a wall of rows stays quiet. */
+.an-tool-chrome {
+  opacity: 0.86;
+}
+
+.an-tool-chrome:hover {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------- *
+ * Markdown rhythm — the assistant reply reads as document prose.
+ * ---------------------------------------------------------------- */
+
+.an-markdown {
+  overflow-wrap: anywhere;
+}
+
+.an-markdown .an-md-p {
+  margin-block: 0.35em;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.an-markdown .an-md-p + .an-md-p {
+  margin-block-start: 1em;
+}
+
+.an-markdown .an-md-h1,
+.an-markdown .an-md-h2,
+.an-markdown .an-md-h3 {
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.an-markdown .an-md-ul,
+.an-markdown .an-md-ol {
+  margin-block: 0.5em;
+  padding-left: 1.4rem;
+  line-height: 1.6;
+}
+
+.an-markdown .an-md-li {
+  margin-block: 0.15em;
+  line-height: 1.6;
+}
+
+.an-markdown .an-md-li > .an-md-ul,
+.an-markdown .an-md-li > .an-md-ol {
+  margin-block: 0.3em 0.2em;
+  padding-left: 1.2rem;
+}
+
+.an-markdown .an-md-ul {
+  list-style-type: disc;
+}
+
+.an-markdown .an-md-ul .an-md-ul {
+  list-style-type: circle;
+}
+
+.an-markdown .an-md-ul .an-md-ul .an-md-ul {
+  list-style-type: square;
+}
+
+.an-markdown .an-md-li::marker {
+  color: var(--an-foreground-muted);
+}
+
+.an-markdown .an-md-code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .an-text-shimmer--active {
+    animation: none;
+    color: var(--an-foreground-muted);
+    background-image: none;
+  }
+}
