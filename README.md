@@ -1,4 +1,8 @@
-# Rasuko
+<p align="center">
+  <img src="src/renderer/assets/rasuko-logo-3d.png" alt="Rasuko logo" width="240">
+</p>
+
+<h1 align="center">Rasuko</h1>
 
 Rasuko is a desktop workspace for creating flexible pages from reusable views. It is built with Electron, Svelte, and TypeScript.
 
