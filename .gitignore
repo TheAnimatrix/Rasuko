@@ -7,4 +7,5 @@ out/
 !.env.example
 .rasuko-*
 artifacts/
+release*/
 test-results/

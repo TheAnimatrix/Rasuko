@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "description": "A blank, unlimited creation canvas — pages as reusable Views",
   "author": "RYSPA",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheAnimatrix/Rasuko.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TheAnimatrix/Rasuko/issues"
+  },
+  "homepage": "https://github.com/TheAnimatrix/Rasuko#readme",
   "engines": {
     "node": ">=22.19.0"
   },
